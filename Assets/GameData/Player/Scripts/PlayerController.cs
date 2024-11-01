@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public void Look(InputAction.CallbackContext context)
     {
         lookVector = context.ReadValue<Vector2>();
+        Debug.Log(lookVector.x + ", " + lookVector.y);
     }
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 look = new Vector3(lookVector.x, lookVector.y, 0);
+        Debug.DrawRay(gameObject.transform.position, look*10);
     }
 }
