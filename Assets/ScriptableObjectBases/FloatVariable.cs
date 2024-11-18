@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "FloatScriptableObject", menuName = "ScriptableObjects/New Float Variable")]
+[CreateAssetMenu(fileName = "New_Float", menuName = "ScriptableObjects/New Float Variable")]
 public class FloatVariable : ScriptableObject
 {
-    public float floatvar = 0;
+    public float value = 0;
 }
