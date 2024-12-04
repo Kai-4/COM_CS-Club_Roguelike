@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc0feb0fe3ca387448cff6947dd58ed6, type: 3}
+  m_Name: TestCorridors
+  m_EditorClassIdentifier: 
+  RoomTemplates:
+  - {fileID: 587392933908877978, guid: 7bc401bfdca85604daea3bbee859cdd8, type: 3}
+  - {fileID: 587392933908877978, guid: bb5b6b3144c8af0419916ad39c4726cd, type: 3}
+  - {fileID: 587392933908877978, guid: 7916ed6e90065ac42aa513725b1c4775, type: 3}
+  - {fileID: 587392933908877978, guid: 0150fd3541d32a34788fdf22e21b677c, type: 3}
+  - {fileID: 587392933908877978, guid: 8dab1cc5a39b4b1438743c6c18b2dc72, type: 3}
+  - {fileID: 587392933908877978, guid: 898e226c4f4c17e489117c4f5f6379e0, type: 3}
