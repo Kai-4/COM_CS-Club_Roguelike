@@ -27,6 +27,9 @@ public class Enemy : MonoBehaviour {
     // List of possible attacks
     public List<string> attacks;
 
+    //TEMPORARY list of attack cooldowns
+    public List<int> cooldowns;
+
     // Cooldowns and timers
     protected Dictionary<string, float> attackCooldowns;
     protected float stunDuration;

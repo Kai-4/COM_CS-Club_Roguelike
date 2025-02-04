@@ -582,13 +582,16 @@ MonoBehaviour:
   health: 10
   maxHealth: 10
   speed: 1
-  attackRange: 1
-  detectionRange: 4
+  attackRange: 2
+  detectionRange: 5
   currentState: 0
   attacks:
-  - bruh
+  - Melee_1
+  - Ranged_1
+  cooldowns: 0300000005000000
   target: {fileID: 543100725}
   enemyLoseDetectionRange: 8
+  attackTime: 1
 --- !u!95 &1739172471
 Animator:
   serializedVersion: 7
@@ -597,9 +600,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739172469}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0ec73cb1c066d7346add65086f24dd8a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 84b3543c4d8ce8c4db183e4bfd1ff299, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -659,8 +662,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
+  m_Mass: 200
+  m_LinearDamping: 0.05
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}

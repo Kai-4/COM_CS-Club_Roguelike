@@ -1,11 +1,12 @@
 using UnityEngine;
 
+
 public class NewMonoBehaviourScript : Enemy
 {
     
     Vector2 moveVec;
     Rigidbody2D rb;
-
+    Animator anim;
     private float moveTimer = 1.25f; //timer that controls how long enemy moves (I think)
     private float moveTimerLower = -2.25f; //timer that controls stationary time (the timer logic might be backwards...)
     private float x_vel = 0.0f;
@@ -14,10 +15,15 @@ public class NewMonoBehaviourScript : Enemy
     //public float enemyDetectionRange = 2.0f; //radius which notices player
     public float enemyLoseDetectionRange = 4.0f; //radius which loses track of player
 
+    public float attackTime = 1.0f;
+    private float busyTime = 0.0f;
+
+
       void Start()
     {
         base.Start();
         rb = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<Animator>();
     }
     protected override void Patrol() {
         //idle behavior
@@ -71,6 +77,7 @@ public class NewMonoBehaviourScript : Enemy
                 currentState = EnemyState.Idle; // Transition to attacking state
             }
         }
+        
     }
 
     protected override void DetectTarget() {
@@ -85,24 +92,51 @@ public class NewMonoBehaviourScript : Enemy
 
 
         // Choose an attack and perform it
+        //Debug.Log("attack!");
+        if (Vector3.Distance(transform.position, target.position) <= attackRange){
+        if (Time.time >= busyTime){
+
         string selectedAttack = ChooseAttack();
         if (selectedAttack != null) {
             Debug.Log($"{enemyName} used {selectedAttack}!"); //its super effective (joking)
             //TODO set enemy logic here! (for attacks!)
-            attackCooldowns[selectedAttack] = Time.time + GetCooldownForAttack(selectedAttack);
+            //attackCooldowns[selectedAttack] = Time.time + GetCooldownForAttack(selectedAttack);
+            if(selectedAttack == attacks[0]){
+                Debug.Log("Melee");
+                anim.Play("Melee");
+            }
+            if(selectedAttack == attacks[1]){
+                Debug.Log("Ranged");
+                anim.Play("Melee");
+            }
+            
         }
         else {
-            currentState = EnemyState.Retreating; // Retreat if no attack available
+            stunDuration = .25f;
+            currentState = EnemyState.Stunned; // Retreat if no attack available
         }
     }
+        } else {
+        Vector3 normalizedGoal = (target.position-transform.position).normalized;
+            //Debug.Log(normalizedGoal);
+            x_vel = normalizedGoal.x;
+            y_vel = normalizedGoal.y;
+            rb.linearVelocity = new Vector2(x_vel, y_vel);//moveVec;
+        }
 
+    }
     protected override string ChooseAttack() {
         // Find an available attack based on cooldown
+        int id = 0;
         foreach (var attack in attacks) {
             if (Time.time >= attackCooldowns[attack]) {
                 //TODO set enemy logic here! (chose different attack patterns)
+                //Debug.Log(attackCooldowns[attack]);
+                attackCooldowns[attack] += cooldowns[id];
+                busyTime = Time.time + attackTime;
                 return attack;
             }
+            id++;
         }
         return null;
     }
@@ -120,18 +154,7 @@ public class NewMonoBehaviourScript : Enemy
         //TODO set enemy logic here! (for dodging!)
     }
 
-    protected override void Retreat() { 
-        //since robots dont have fear, rather than retreating, the robot will slow down as it charges
-        //its next attack.
 
-        Vector3 normalizedGoal = (target.position-transform.position).normalized;
-        Debug.Log(normalizedGoal);
-        x_vel = normalizedGoal.x;
-        y_vel = normalizedGoal.y;
-        rb.linearVelocity = new Vector2(x_vel, y_vel);//moveVec;
-        //TODO set enemy logic here! (for retreat!)
-        //retreat does not apply to mechanical / digital enemies, only living ones (robots can be programmed without fear!)
-    }
 
     protected override void HandleStun() {
         // Logic for handling stun duration
@@ -139,6 +162,9 @@ public class NewMonoBehaviourScript : Enemy
         if (stunDuration <= 0)
         {
             currentState = EnemyState.Idle;
+        }
+        else {
+            rb.linearVelocity = new Vector2(0, 0);
         }
     }
 
